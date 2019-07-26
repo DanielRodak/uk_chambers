@@ -95,12 +95,17 @@ class ChambersListState extends State<ChambersList> {
   Container singleRowContainer(BuildContext context, int index) {
     return Container(
       height: MediaQuery.of(context).size.height / 3 - 6,
-      child: Center(child: Text(chambersList[index].name)),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/uk-logo.jpg"),
-          fit: BoxFit.cover,
-        ),
+      child: Stack(
+        children: [
+          Image.network(
+            chambersList[index].imageUrl,
+            fit: BoxFit.cover,
+            alignment: Alignment.center,
+            height: double.infinity,
+            width: double.infinity,
+          ),
+          Center(child: Text(chambersList[index].name))
+        ],
       ),
     );
   }
