@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:uk_chambers/blocs/chambers_repo_bloc.dart';
+import 'package:uk_chambers/remote/repository.dart';
+import 'package:provider/provider.dart';
 
 import 'booking_screen.dart';
 
@@ -9,7 +12,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: new ChambersList(),
+      title: 'GraphQL Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('GraphQL Demo'),
+        ),
+        body: Provider<ChambersRepoBloc>(
+          builder: (_) =>
+              ChambersRepoBloc(
+                chambersRepo: ChambersProvider(),
+              ),
+          dispose: (_, bloc) => bloc.dispose(),
+          child: ChambersList(),
+        ),
+      ),
     );
   }
 }

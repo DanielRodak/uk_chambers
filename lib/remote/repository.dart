@@ -10,7 +10,7 @@ class ChambersProvider {
 
   QueryOptions _queryOptions() {
     return QueryOptions(
-      document: _readChambers,
+      document: readChambers,
     );
   }
 
@@ -28,8 +28,8 @@ class ChambersProvider {
   }
 }
 
-const String _readChambers = r'''
-  query {
+const String readChambers = r'''
+  query ReadChambers {
     chambers {
       id,
       name,
