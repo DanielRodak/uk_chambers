@@ -11,7 +11,9 @@ GraphQLClient _client;
 GraphQLClient getGraphQLClient() {
   _client ??= GraphQLClient(
     link: _link,
-    cache: null,
+    cache: OptimisticCache(
+      dataIdFromObject: typenameDataIdFromObject,
+    ),
   );
 
   return _client;

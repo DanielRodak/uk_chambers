@@ -19,7 +19,7 @@ class ChambersProvider {
       throw Exception("Error during chambers call!");
     }
 
-    final list = queryResult.data['chambers'] as List<dynamic>;
+    final list = queryResult.data["chambers"] as List<dynamic>;
 
     return list
         .map((repoJson) => Chamber.fromJson(repoJson))
