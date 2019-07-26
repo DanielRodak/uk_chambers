@@ -1,18 +1,22 @@
 import 'dart:convert';
 
+import 'chamber.dart';
+
 Event eventFromJson(String str) => Event.fromJson(json.decode(str));
 
 String eventToJson(Event data) => json.encode(data.toJson());
 
 class Event {
-  String chamberId;
+  String id;
+  Chamber chamber;
   String username;
   int dateStart;
   int dateEnd;
   bool cycle;
 
   Event({
-    this.chamberId,
+    this.id,
+    this.chamber,
     this.username,
     this.dateStart,
     this.dateEnd,
@@ -20,18 +24,20 @@ class Event {
   });
 
   factory Event.fromJson(Map<String, dynamic> json) => new Event(
-        chamberId: json["chamber_id"],
+        id: json["id"],
+      chamber: json["chamber"],
         username: json["username"],
-        dateStart: json["date_start"],
-        dateEnd: json["date_end"],
+        dateStart: json["dateStart"],
+        dateEnd: json["dateEnd"],
         cycle: json["cycle"],
       );
 
   Map<String, dynamic> toJson() => {
-        "chamber_id": chamberId,
+        "id": id,
+        "chamber": chamber,
         "username": username,
-        "date_start": dateStart,
-        "date_end": dateEnd,
+        "dateStart": dateStart,
+        "dateEnd": dateEnd,
         "cycle": cycle,
       };
 }
