@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:uk_chambers/blocs/chambers_repo_bloc.dart';
+import 'package:uk_chambers/remote/chambers_repository.dart';
+import 'package:uk_chambers/viewmodels/chamber_view_model.dart';
 
 import 'booking_screen.dart';
 
@@ -9,18 +13,52 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: new ChambersList(),
+      home: Scaffold(
+        body: Provider<ChambersRepoBloc>(
+          builder: (_) => ChambersRepoBloc(
+            chambersRepo: ChambersProvider(),
+          ),
+          dispose: (_, bloc) => bloc.dispose(),
+          child: ChambersRepoWidget(),
+        ),
+      ),
+    );
+  }
+}
+
+class ChambersRepoWidget extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder(
+      stream: Provider.of<ChambersRepoBloc>(context).repoList,
+      builder: (context, repoSnapshot) {
+        if (!repoSnapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        final list = repoSnapshot.data as List<ChambersRepoModel>;
+
+        return new ChambersList(list);
+      },
     );
   }
 }
 
 class ChambersList extends StatefulWidget {
+  List<ChambersRepoModel> chambersList;
+
+  ChambersList(this.chambersList);
+
   @override
-  ChambersListState createState() => ChambersListState();
+  ChambersListState createState() => ChambersListState(chambersList);
 }
 
 class ChambersListState extends State<ChambersList> {
-  List<String> chambersList = ["First", "Second", "Third"];
+  List<ChambersRepoModel> chambersList;
+
+  ChambersListState(this.chambersList);
 
   @override
   Widget build(BuildContext ctxt) {
@@ -40,7 +78,8 @@ class ChambersListState extends State<ChambersList> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => BookingScreen(chambersList[index])),
+                  builder: (context) =>
+                      BookingScreen(chambersList[index].name)),
             );
           },
         );
@@ -56,12 +95,17 @@ class ChambersListState extends State<ChambersList> {
   Container singleRowContainer(BuildContext context, int index) {
     return Container(
       height: MediaQuery.of(context).size.height / 3 - 6,
-      child: Center(child: Text(chambersList[index])),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage("assets/uk-logo.jpg"),
-          fit: BoxFit.cover,
-        ),
+      child: Stack(
+        children: [
+          Image.network(
+            chambersList[index].imageUrl,
+            fit: BoxFit.cover,
+            alignment: Alignment.center,
+            height: double.infinity,
+            width: double.infinity,
+          ),
+          Center(child: Text(chambersList[index].name))
+        ],
       ),
     );
   }
