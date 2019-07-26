@@ -18,12 +18,12 @@ class Chamber {
   factory Chamber.fromJson(Map<String, dynamic> json) => new Chamber(
         id: json["id"],
         name: json["name"],
-        imageUrl: json["image_url"],
+        imageUrl: json["imageUrl"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
-        "image_url": imageUrl,
+        "imageUrl": imageUrl,
       };
 }
