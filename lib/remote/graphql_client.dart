@@ -10,7 +10,8 @@ GraphQLClient _client;
 
 GraphQLClient getGraphQLClient() {
   _client ??= GraphQLClient(
-    link: _link, cache: null,
+    link: _link,
+    cache: null,
   );
 
   return _client;

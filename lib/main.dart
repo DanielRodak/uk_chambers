@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:uk_chambers/blocs/chambers_repo_bloc.dart';
 import 'package:uk_chambers/remote/repository.dart';
-import 'package:provider/provider.dart';
 import 'package:uk_chambers/viewmodels/chamber_view_model.dart';
 
 import 'booking_screen.dart';
-import 'data/chamber.dart';
 
 void main() => runApp(MyApp());
 
@@ -23,10 +22,9 @@ class MyApp extends StatelessWidget {
           title: Text('GraphQL Demo'),
         ),
         body: Provider<ChambersRepoBloc>(
-          builder: (_) =>
-              ChambersRepoBloc(
-                chambersRepo: ChambersProvider(),
-              ),
+          builder: (_) => ChambersRepoBloc(
+            chambersRepo: ChambersProvider(),
+          ),
           dispose: (_, bloc) => bloc.dispose(),
           child: ChambersRepoWidget(),
         ),
@@ -87,7 +85,8 @@ class ChambersListState extends State<ChambersList> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => BookingScreen(chambersList[index].name)),
+                  builder: (context) =>
+                      BookingScreen(chambersList[index].name)),
             );
           },
         );

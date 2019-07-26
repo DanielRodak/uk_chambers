@@ -20,18 +20,18 @@ class Event {
   });
 
   factory Event.fromJson(Map<String, dynamic> json) => new Event(
-    chamberId: json["chamber_id"],
-    username: json["username"],
-    dateStart: json["date_start"],
-    dateEnd: json["date_end"],
-    cycle: json["cycle"],
-  );
+        chamberId: json["chamber_id"],
+        username: json["username"],
+        dateStart: json["date_start"],
+        dateEnd: json["date_end"],
+        cycle: json["cycle"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "chamber_id": chamberId,
-    "username": username,
-    "date_start": dateStart,
-    "date_end": dateEnd,
-    "cycle": cycle,
-  };
+        "chamber_id": chamberId,
+        "username": username,
+        "date_start": dateStart,
+        "date_end": dateEnd,
+        "cycle": cycle,
+      };
 }
