@@ -4,7 +4,7 @@ import 'package:uk_chambers/data/Chamber.dart';
 import 'graphql_client.dart';
 
 class ChambersProvider {
-  Future<List<Chamber>> getCurrentUserRepos() {
+  Future<List<Chamber>> getCurrentChambersRepos() {
     return getGraphQLClient().query(_queryOptions()).then(_toChambers);
   }
 
