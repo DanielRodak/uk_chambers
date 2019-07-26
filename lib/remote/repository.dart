@@ -3,30 +3,24 @@ import 'package:uk_chambers/data/Chamber.dart';
 
 import 'graphql_client.dart';
 
-class GitHubRepoProvider {
-// method will give us Data model
+class ChambersProvider {
   Future<List<Chamber>> getCurrentUserRepos() {
-    return getGraphQLClient().query(_queryOptions()).then(_toGitHubRepo);
+    return getGraphQLClient().query(_queryOptions()).then(_toChambers);
   }
 
-// provides Graph Query options, we can provide the optional variable here
   QueryOptions _queryOptions() {
     return QueryOptions(
-      document: _readRepositories,
-      variables: <String, dynamic>{
-        'nRepositories': 50,
-      },
+      document: _readChambers,
     );
   }
 
-// parse JSON to Data model
-  List<Chamber> _toGitHubRepo(QueryResult queryResult) {
+  List<Chamber> _toChambers(QueryResult queryResult) {
     if (queryResult.hasErrors) {
-      throw Exception();
+      throw Exception("Error during chambers call!");
     }
 
     final list =
-    queryResult.data['viewer']['repositories']['nodes'] as List<dynamic>;
+        queryResult.data['chambers'] as List<dynamic>;
 
     return list
         .map((repoJson) => Chamber.fromJson(repoJson))
@@ -34,17 +28,12 @@ class GitHubRepoProvider {
   }
 }
 
-// Graph Query to get repository of current user
-const String _readRepositories = r'''
-  query ReadRepositories($nRepositories: Int!) {
-    viewer {
-      repositories(last: $nRepositories) {
-        nodes {
-          name
-          createdAt
-          forkCount
-        }
-      }
+const String _readChambers = r'''
+  query {
+    chambers {
+      id,
+      name,
+      imageUrl
     }
-  }
+}
 ''';
