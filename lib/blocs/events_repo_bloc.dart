@@ -5,19 +5,19 @@ import 'package:uk_chambers/remote/events_repository.dart';
 import 'package:uk_chambers/viewmodels/event_view_model.dart';
 
 class EventsRepoBloc {
-  final repoList = BehaviorSubject<List<EventsRepoModel>>();
+  final eventsList = BehaviorSubject<List<EventsRepoModel>>();
   final EventsProvider eventsRepo;
 
   EventsRepoBloc({
     @required this.eventsRepo,
   }) {
-    getChambers()
+    getEvents()
         .then(toViewModel)
-        .then(repoList.add)
+        .then(eventsList.add)
         .catchError((err) => print('Error getting repo $err'));
   }
 
-  Future<List<Event>> getChambers() {
+  Future<List<Event>> getEvents() {
     return eventsRepo.getCurrentChambersRepos();
   }
 
@@ -37,6 +37,32 @@ class EventsRepoBloc {
   }
 
   void dispose() {
-    repoList.close();
+    eventsList.close();
+  }
+}
+
+class EventRepoBloc {
+  final event = BehaviorSubject<EventRepoModel>();
+  final EventsProvider eventRepo;
+
+  EventRepoBloc({
+    @required this.eventRepo,
+  }) {
+    getEvents()
+        .then(toViewModel)
+        .then(event.add)
+        .catchError((err) => print('Error getting repo $err'));
+  }
+
+  Future<Event> getEvents() {
+    return eventRepo.saveEventRemote();
+  }
+
+  EventRepoModel toViewModel(Event dataModelList) {
+    return EventRepoModel(id: dataModelList.id,);
+  }
+
+  void dispose() {
+    event.close();
   }
 }

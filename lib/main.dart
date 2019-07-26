@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:uk_chambers/blocs/chambers_repo_bloc.dart';
 import 'package:uk_chambers/remote/chambers_repository.dart';
+import 'package:uk_chambers/remote/events_repository.dart';
 import 'package:uk_chambers/viewmodels/chamber_view_model.dart';
 
 import 'booking_screen.dart';

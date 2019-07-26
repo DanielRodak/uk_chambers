@@ -16,7 +16,7 @@ class EventsProvider {
 
   List<Event> _toEvents(QueryResult queryResult) {
     if (queryResult.hasErrors) {
-      throw Exception("Error during chambers call!");
+      throw Exception("Error during events call!");
     }
 
     final list = queryResult.data["events"] as List<dynamic>;
@@ -27,21 +27,21 @@ class EventsProvider {
   }
 
   Future<Event> saveEventRemote() {
-    return getGraphQLClient().query(_writeEvent()).then(_toEvent);
+    return getGraphQLClient().mutate(_writeEvent()).then(_toEvent);
   }
 
-  QueryOptions _writeEvent() {
-    return QueryOptions(
-      document: readEvents,
+  MutationOptions _writeEvent() {
+    return MutationOptions(
+      document: writeEvent,
     );
   }
 
   Event _toEvent(QueryResult queryResult) {
     if (queryResult.hasErrors) {
-      throw Exception("Error during chambers call!");
+      throw Exception("Error during event call!");
     }
 
-    final event = queryResult.data;
+    final event = queryResult.data["reserve"];
 
     return event
         .map((repoJson) => Event.fromJson(event));
@@ -64,8 +64,8 @@ const String readEvents = r'''
 
 
 const String writeEvent = r'''
- mutation {
-   reserve(chamberId: "cjykddrlz001k0758a6kpt8e0", username: "leszek", cycle: false, dateStart: 20, dateEnd: 30) {
+ mutation WriteEvent {
+   reserve(chamberId: "cjykddrlz001k0758a6kpt8e0", username: "leszek", cycle: false, dateStart: 70, dateEnd: 80) {
      id
    }
  }

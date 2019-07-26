@@ -18,3 +18,11 @@ class EventsRepoModel {
     @required this.cycle,
   });
 }
+
+class EventRepoModel {
+  final String id;
+
+  EventRepoModel({
+    @required this.id,
+  });
+}
