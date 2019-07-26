@@ -1,7 +1,7 @@
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:uk_chambers/data/Chamber.dart';
 
-import 'base_api.dart';
+import 'graphql_client.dart';
 
 class GitHubRepoProvider {
 // method will give us Data model

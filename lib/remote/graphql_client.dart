@@ -11,9 +11,6 @@ GraphQLClient _client;
 GraphQLClient getGraphQLClient() {
   _client ??= GraphQLClient(
     link: _link,
-    cache: InMemoryCache(storageProvider: () {
-      return getTemporaryDirectory(); // Provide a cache mechanism
-    }),
   );
 
   return _client;
