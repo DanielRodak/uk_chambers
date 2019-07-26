@@ -1,5 +1,5 @@
 import 'package:uk_chambers/data/Chamber.dart';
-import 'package:uk_chambers/remote/repository.dart';
+import 'package:uk_chambers/remote/chambers_repository.dart';
 import 'package:uk_chambers/viewmodels/chamber_view_model.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
